@@ -34,7 +34,8 @@ export default {
           thumbnailWidth: 150,
           maxFilesize: 10,
           headers: { "My-Awesome-Header": "header value" }
-      }
+      },
+      isFisrtImage: true,
     }
   },
   created: function(){
@@ -48,8 +49,17 @@ export default {
     this.canvas = new fabric.Canvas('c0');
   },
   methods: {
-    'showSuccess': function () {
+    'showSuccess': function (file) {
       console.log('A file was successfully uploaded')
+      var vm = this;
+      // vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
+      console.log(this.isFisrtImage)
+      if (this.isFisrtImage) {
+        //console.log(this.isFisrtImage)
+        vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
+        this.isFisrtImage = false
+
+      }
     },
     'submitData': function () {
       var vm = this;
