@@ -31,7 +31,9 @@ export default {
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           // addRemoveLinks: true,
-          thumbnailWidth: 150,
+          clickable: true,
+          thumbnailWidth: 100,
+          thumbnailHeight: 120,
           maxFilesize: 10,
           headers: { "My-Awesome-Header": "header value" }
       },
@@ -55,11 +57,34 @@ export default {
       // vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
       console.log(this.isFisrtImage)
       if (this.isFisrtImage) {
-        //console.log(this.isFisrtImage)
-        vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
+
+        var reader = new FileReader();
+        reader.onload = function(f) {
+            var data = f.target.result;
+            fabric.Image.fromURL(data, function(img) {
+                var oImg = img.set({
+                    left: 0,
+                    top: 0,
+                    width: vm.canvas.width,
+                    height: vm.canvas.height
+                });
+                vm.canvas.setBackgroundImage(oImg).renderAll();
+                var dataURL = vm.canvas.toDataURL({
+                    format: 'png',
+                    quality: 0.8
+                });
+            });
+        };
+        reader.readAsDataURL(file);
+
+        // image.scaleToWidth(service.canvas.getWidth());
+
+        // vm.canvas.setBackgroundImage(image, vm.canvas.renderAll.bind(vm.canvas)); 
         this.isFisrtImage = false
 
       }
+      var files = this.$refs.myVueDropzone.getAcceptedFiles()
+      console.log("files length : " + files.length)
     },
     'submitData': function () {
       var vm = this;
@@ -88,7 +113,30 @@ export default {
     attachListener: function (file) {
       var vm = this;
       file.previewElement.addEventListener("click", function() {
-        vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
+
+        // var image = file.dataURL
+        // vm.canvas.setBackgroundImage(image, vm.canvas.renderAll.bind(vm.canvas));
+        // vm.canvas.setBackgroundImage(image).renderAll()
+
+        var reader = new FileReader();
+        reader.onload = function(f) {
+            var data = f.target.result;
+            fabric.Image.fromURL(data, function(img) {
+
+                img.scaleToWidth(500);
+                // vm.canvas.setBackgroundImage(sImg).renderAll();
+                vm.canvas.setBackgroundImage(img, vm.canvas.renderAll.bind(vm.canvas));
+                // var dataURL = vm.canvas.toDataURL({
+                //     format: 'png',
+                //     quality: 0.8
+                // });
+            });
+        };
+        reader.readAsDataURL(file);
+
+
+        // image.scaleToWidth(vm.canvas.getWidth());
+        // vm.canvas.add(image); 
       })
     }
   }
@@ -117,4 +165,10 @@ export default {
       transform: translate(-50%, -50%);
   }
 }
+canvas{
+  border-width: 1pz;
+  border-style: solid;
+  border-color: #000;
+}
+
 </style>
