@@ -3,7 +3,7 @@
    <v-toolbar dark color="red lighten-2" flat>
      <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
      <v-toolbar-title> <router-link to="/" tag="span"><v-btn flat>{{title}}</v-btn></router-link></v-toolbar-title>
-     <v-menu offset-y v-if='loggedIn'>
+<!--      <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> Boards</v-btn>
       <v-list>
         <div v-for="board in boards" :key="board.id">
@@ -14,13 +14,13 @@
 
         </div>
       </v-list>
-    </v-menu>
+    </v-menu> -->
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <router-link to="/image" tag="span"><v-btn flat>ImageUpload</v-btn></router-link>
     <div v-if='!loggedIn'>
       <router-link to="/register" tag="span"><v-btn flat>Register</v-btn></router-link>
-      <router-link to="/login" tag="span"><v-btn flat>Login</v-btn></router-link>
+      <router-link to="/auth" tag="span"><v-btn flat>Login</v-btn></router-link>
     </div>
     <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> {{user.username}}</v-btn>
@@ -51,43 +51,47 @@ import boardDataMixin from './mixins/boardDataMixin'
       }
     },
     created () {
+      console.log("main created")
 
-     this.redirectGuestToLogin();
+      this.loggedIn = this.$store.getters['user/isLogged']
 
-      Event.$on('login',($user)=>{
-        this.loggedIn=true;
-        this.user=$user;
-        this.fetchBoardsData();
-      });
+      console.log("log in: " + this.loggedIn)
 
-       Event.$on('logout',()=>{
-            this.loggedIn=false;
-          });
+     // this.redirectGuestToLogin();
 
-        if(token){
-          this.user= JSON.parse(localStorage.getItem('user'));
-          this.loggedIn=true;
-          this.fetchBoardsData();
-        }
+      // Event.$on('login',($user)=>{
+      //   this.loggedIn=true;
+      //   this.user=$user;
+      //   this.fetchBoardsData();
+      // });
+
+      // Event.$on('logout',()=>{
+      //   this.loggedIn=false;
+      // });
+
+      // if(token){
+      //   this.user= JSON.parse(localStorage.getItem('user'));
+      //   this.loggedIn=true;
+      //   this.fetchBoardsData();
+      // }
     },
-    mixins:[boardDataMixin],
+    // mixins:[boardDataMixin],
 
-    methods:{
+    // methods:{
 
-      redirectGuestToLogin(){
-         if (!token) {
-          return this.$router.push('/login');
-        }
-      }
+    //   redirectGuestToLogin(){
+    //      if (!token) {
+    //       return this.$router.push('/login');
+    //     }
+    //   }
 
-    }
+    // }
 
    }
 </script>
 
 <style lang="stylus">
   @import './stylus/main'
-
 </style>
 <!-- 
 <style lang="stylus">

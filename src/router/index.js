@@ -7,19 +7,32 @@ import Boards from '@/components/Boards'
 import Logout from '@/components/Logout'
 import SingleBoard from '@/components/SingleBoard'
 import ImagePage from '@/components/ImagePage'
+import Dashboard from '@/components/Dashboard'
+import Auth from '@/components/Auth'
+import auth from '@/auth'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+var routes = [
     {
       path: '/',
-      name: 'Boards',
-      component: Boards
+      name: 'home',
+      component: Home
+    },{
+      path: '/auth',
+      name: 'auth',
+      component: Auth,
+      meta: { guestOnly: true }
     },{
       path: '/image',
       name: 'ImagePage',
       component: ImagePage
+    },{
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
+      meta: { requireAuth: true }
     },{
       path: '/login',
       name: 'Login',
@@ -37,6 +50,19 @@ export default new Router({
       name: 'SingleBoard',
       component: SingleBoard
     }
-  ],
-  mode:'history'
+]
+
+export const router = new Router({
+  mode: 'history',
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  let currentUser = auth.user()
+  let requireAuth = to.matched.some(record => record.meta.requireAuth)
+  let guestOnly = to.matched.some(record => record.meta.guestOnly)
+
+  if (requireAuth && !currentUser) next('home')
+  else if (guestOnly && currentUser) next('dashboard')
+  else next()
 })

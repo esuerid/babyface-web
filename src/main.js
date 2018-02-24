@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import App from './App'
-import router from './router'
+import { router } from './router'
 import axios from 'axios'
 import { fabric } from 'fabric'
+import firebase from 'firebase'
+import {store} from './store'
+import auth from '@/auth'
 
 window.token=localStorage.getItem('token');
 
 window.axios=axios
-window.axios.defaults.baseURL='http://weblloapi.dev'
+// window.axios.defaults.baseURL='http://weblloapi.dev'
 window.axios.defaults.params={api_token:window.token}
 
 import colors from 'vuetify/es5/util/colors'
@@ -37,6 +40,10 @@ window.Event= new Vue;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
+  beforeCreate () {
+    auth.init(this)
+  },
   render: h => h(App)
 })
