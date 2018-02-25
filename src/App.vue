@@ -23,9 +23,10 @@
       <router-link to="/auth" tag="span"><v-btn flat>Login</v-btn></router-link>
     </div>
     <v-menu offset-y v-if='loggedIn'>
-      <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> {{user.username}}</v-btn>
+      <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> {{user.displayName}}</v-btn>
       <v-list>
           <router-link to="/logout" tag='v-list-tile'>Logout</router-link>
+          <!-- <v-btn primary flat id="logoutBtn" tag='v-list-tile'>Logout</v-btn> -->
       </v-list>
       </v-menu>
 
@@ -41,6 +42,7 @@
 
 <script>
 import boardDataMixin from './mixins/boardDataMixin'
+import firebase from 'firebase'
   export default {
     data () {
       return {
@@ -54,8 +56,18 @@ import boardDataMixin from './mixins/boardDataMixin'
       console.log("main created")
 
       this.loggedIn = this.$store.getters['user/isLogged']
+      
+
+      console.log("user : "+this.user)
 
       console.log("log in: " + this.loggedIn)
+
+      firebase.auth().onAuthStateChanged((user) => {
+        this.user = this.$store.getters['user/user']
+
+        this.loggedIn = this.$store.getters['user/isLogged']
+        console.log("auth changed : " + this.loggedIn)
+      })
 
      // this.redirectGuestToLogin();
 

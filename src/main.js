@@ -8,7 +8,7 @@ import firebase from 'firebase'
 import {store} from './store'
 import auth from '@/auth'
 
-window.token=localStorage.getItem('token');
+// window.token=localStorage.getItem('token');
 
 window.axios=axios
 // window.axios.defaults.baseURL='http://weblloapi.dev'

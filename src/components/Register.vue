@@ -34,7 +34,6 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <div id="firebaseui-auth-container"></div>
     
   </div>  
 </template>
@@ -52,9 +51,6 @@
         }
       }
     },
-    mounted() {
-      auth.authForm('#firebaseui-auth-container')
-    },
     methods:{
       registerIt() {
         axios.post('http://weblloapi.dev/register',this.register)
@@ -68,6 +64,3 @@
     }
   }
 </script>
-<style>
-  @import "../../node_modules/firebaseui/dist/firebaseui.css";
-</style>
