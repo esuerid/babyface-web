@@ -1,7 +1,7 @@
 <template>
-  
+
   <div>
-    
+
     <h2>You are logged out!</h2>
   </div>
 
@@ -14,7 +14,7 @@
 
     created () {
       auth.logout()
-      
+
 
       // if(!token) {
       //  return false;
