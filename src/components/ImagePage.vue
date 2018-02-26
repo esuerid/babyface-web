@@ -1,10 +1,23 @@
 <template>
   <div>
-    <vue-dropzone ref="myVueDropzone" id="dropzone" acceptedFileTypes='.jpg,.png' v-on:vdropzone-success="showSuccess" v-on:vdropzone-file-added="attachListener" :options="dropzoneOptions"></vue-dropzone>
-    <!-- <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-file-added="vfileAdded" @vdropzone-success="vsuccess" @vdropzone-error="verror" @vdropzone-removed-file="vremoved" @vdropzone-sending="vsending" @vdropzone-success-multiple="vsuccessMuliple" @vdropzone-sending-multiple="vsendingMuliple" @vdropzone-queue-complete="vqueueComplete" @vdropzone-total-upload-progress="vprogress" @vdropzone-mounted="vmounted" @vdropzone-drop="vddrop" @vdropzone-drag-start="vdstart" @vdropzone-drag-end="vdend" @vdropzone-drag-enter="vdenter" @vdropzone-drag-over="vdover" @vdropzone-drag-leave="vdleave" :options="dropzoneOptions"> -->
-    </vue-dropzone>
-    <button type="submit" class="btn btn-primary" @click="submitData()">submit</button>
-    <canvas id="c0" width="1000" height="1000"></canvas>
+    <v-container >
+      <v-layout row wrap>
+        <v-flex xs10 offset-xs1>
+          <v-card dark color="red lighten-4">
+            <vue-dropzone ref="myVueDropzone" id="dropzone" acceptedFileTypes='.jpg,.png' v-on:vdropzone-success="showSuccess" v-on:vdropzone-file-added="attachListener" :options="dropzoneOptions"></vue-dropzone>
+            <!-- <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-file-added="vfileAdded" @vdropzone-success="vsuccess" @vdropzone-error="verror" @vdropzone-removed-file="vremoved" @vdropzone-sending="vsending" @vdropzone-success-multiple="vsuccessMuliple" @vdropzone-sending-multiple="vsendingMuliple" @vdropzone-queue-complete="vqueueComplete" @vdropzone-total-upload-progress="vprogress" @vdropzone-mounted="vmounted" @vdropzone-drop="vddrop" @vdropzone-drag-start="vdstart" @vdropzone-drag-end="vdend" @vdropzone-drag-enter="vdenter" @vdropzone-drag-over="vdover" @vdropzone-drag-leave="vdleave" :options="dropzoneOptions"> -->
+            </vue-dropzone>
+
+            <button type="submit" class="btn btn-primary" @click="submitData()">submit</button>
+          </v-card>
+        </v-flex>
+        <v-flex xs10 offset-xs1>
+          <v-card dark color="red lighten-4">
+            <canvas id="c0" width="500" height="500"></canvas>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -54,7 +67,7 @@ export default {
     'showSuccess': function (file) {
       console.log('A file was successfully uploaded')
       var vm = this;
-      // vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas)); 
+      // vm.canvas.setBackgroundImage(file.dataURL, vm.canvas.renderAll.bind(vm.canvas));
       console.log(this.isFisrtImage)
       if (this.isFisrtImage) {
 
@@ -79,7 +92,7 @@ export default {
 
         // image.scaleToWidth(service.canvas.getWidth());
 
-        // vm.canvas.setBackgroundImage(image, vm.canvas.renderAll.bind(vm.canvas)); 
+        // vm.canvas.setBackgroundImage(image, vm.canvas.renderAll.bind(vm.canvas));
         this.isFisrtImage = false
 
       }
@@ -124,6 +137,7 @@ export default {
             fabric.Image.fromURL(data, function(img) {
 
                 img.scaleToWidth(500);
+                // img.scaleToHeight(400);
                 // vm.canvas.setBackgroundImage(sImg).renderAll();
                 vm.canvas.setBackgroundImage(img, vm.canvas.renderAll.bind(vm.canvas));
                 // var dataURL = vm.canvas.toDataURL({
@@ -136,15 +150,16 @@ export default {
 
 
         // image.scaleToWidth(vm.canvas.getWidth());
-        // vm.canvas.add(image); 
+        // vm.canvas.add(image);
       })
     }
   }
 }
 
-</script scoped>
+</script>
 
-.slide {
+<style scoped>
+/*.slide {
   color: #fff;
   height: 300px;
   position: relative;
@@ -152,9 +167,6 @@ export default {
   &--1 {
       background-color: #f1c40f;
   }
-
-  ...
-
   h3 {
       font-size: 32px;
       font-weight: 300;
@@ -164,7 +176,7 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
   }
-}
+}*/
 canvas{
   border-width: 1pz;
   border-style: solid;

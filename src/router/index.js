@@ -11,6 +11,7 @@ import Dashboard from '@/components/Dashboard'
 import Auth from '@/components/Auth'
 import auth from '@/auth'
 import Home from '@/components/Home'
+import Compare from '@/components/Compare'
 
 Vue.use(Router)
 
@@ -18,7 +19,11 @@ var routes = [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Compare
+    },{
+      path: '/compare',
+      name: 'compare',
+      component: Compare
     },{
       path: '/auth',
       name: 'auth',

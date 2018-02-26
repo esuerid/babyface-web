@@ -1,23 +1,28 @@
 <template>
   <div>
-    <img src="../assets/babyface_front.png" alt="Babyface front" class="center">
+    <img src="../assets/babyisontheway.png" alt="Babyface front" class="center">
     <!-- <h1>Hello!</h1> -->
     <!-- <p>What you want to do?</p>  -->
-    <router-link to="/auth">Sign in</router-link>
+    <div align="center">
+      <router-link to="/auth" style="text-decoration: none;" ><v-btn color="info" >Sign in</v-btn></router-link>
+    </div>
   </div>
 </template>
 
 <script>
-    export default {
-        name: 'home'
-    }
+  export default {
+    name: 'home'
+  }
 </script>
 
 <style scoped>
+/*img {margin:0px; padding: 0px; float: left;border:0px}*/
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+  display: block;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;
 }
+
 </style>

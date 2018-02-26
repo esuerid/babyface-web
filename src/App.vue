@@ -1,15 +1,15 @@
 <template>
   <v-app>
-   <v-toolbar dark color="red lighten-2" flat>
+   <v-toolbar dark color="pink lighten-3" flat>
      <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
      <v-toolbar-title> <router-link to="/" tag="span"><v-btn flat>{{title}}</v-btn></router-link></v-toolbar-title>
 <!--      <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> Boards</v-btn>
       <v-list>
         <div v-for="board in boards" :key="board.id">
-            
+
             <router-link :to ="{name:'SingleBoard',params:{id:board.id}}" tag='v-list-tile' >
-               {{board.name}} 
+               {{board.name}}
             </router-link>
 
         </div>
@@ -32,11 +32,11 @@
 
   </v-toolbar>
     <main>
-      <v-container fluid>
+      <v-container fluid pa-0>
         <router-view></router-view>
       </v-container>
     </main>
-   
+
   </v-app>
 </template>
 
@@ -56,7 +56,7 @@ import firebase from 'firebase'
       console.log("main created")
 
       this.loggedIn = this.$store.getters['user/isLogged']
-      
+
 
       console.log("user : "+this.user)
 
@@ -64,9 +64,17 @@ import firebase from 'firebase'
 
       firebase.auth().onAuthStateChanged((user) => {
         this.user = this.$store.getters['user/user']
-
         this.loggedIn = this.$store.getters['user/isLogged']
-        console.log("auth changed : " + this.loggedIn)
+        if (user) {
+          console.log("auth changed : " + this.loggedIn)
+          user.getIdToken().then(function(idToken) {
+            // userIdToken = idToken;
+            console.log("token : "+ idToken)
+          });
+        } else{
+
+        }
+
       })
 
      // this.redirectGuestToLogin();
@@ -105,7 +113,7 @@ import firebase from 'firebase'
 <style lang="stylus">
   @import './stylus/main'
 </style>
-<!-- 
+<!--
 <style lang="stylus">
   @require '../node_modules/vuetify/src/stylus/settings/_colors.styl'
   $theme := {
